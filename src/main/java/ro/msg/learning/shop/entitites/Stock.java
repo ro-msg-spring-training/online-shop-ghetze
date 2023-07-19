@@ -1,13 +1,13 @@
 package ro.msg.learning.shop.entitites;
 
 import jakarta.persistence.*;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Data
-@Table(name = "stocks")
+@Getter
+@Setter
+@Table(name = "stock")
 public class Stock extends EntityWithID {
 
 	@ManyToOne

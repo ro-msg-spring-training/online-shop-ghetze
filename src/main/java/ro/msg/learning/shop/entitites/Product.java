@@ -1,7 +1,6 @@
 package ro.msg.learning.shop.entitites;
 
 import jakarta.persistence.*;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,8 +8,9 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
-@Data
-@Table(name = "products")
+@Getter
+@Setter
+@Table(name = "product")
 public class Product extends EntityWithID {
 
 	@Column(name = "name")
@@ -27,7 +27,6 @@ public class Product extends EntityWithID {
 
 	@Column(name = "img_url")
 	private String imageUrl;
-
 	@ManyToOne
 	@JoinColumn(name = "supplier_id")
 	private Supplier supplier;

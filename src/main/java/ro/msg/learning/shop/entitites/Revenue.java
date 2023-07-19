@@ -1,7 +1,6 @@
 package ro.msg.learning.shop.entitites;
 
 import jakarta.persistence.*;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,8 +8,9 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
-@Data
-@Table(name = "revenues")
+@Getter
+@Setter
+@Table(name = "revenue")
 public class Revenue extends EntityWithID {
 	@ManyToOne
 	@JoinColumn(name = "location_id")

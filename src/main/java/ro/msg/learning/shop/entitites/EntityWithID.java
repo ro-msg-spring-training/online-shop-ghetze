@@ -1,13 +1,16 @@
 package ro.msg.learning.shop.entitites;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+import java.util.UUID;
+
+@Getter
+@Setter
 @MappedSuperclass
 public class EntityWithID {
+
 	@Id
-	@Column(unique = true)
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private UUID id = UUID.randomUUID();
 }
