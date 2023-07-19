@@ -1,0 +1,24 @@
+#https://docs.spring.io/spring-boot/docs/2.1.4.RELEASE/reference/html/common-application-properties.html
+
+# filter only the useful things from actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+# this works with PostgreSQL.
+spring:
+  datasource:
+    url: jdbc:postgresql://host.docker.internal:49153/shopDb
+    username: postgres
+    password: postgrespw
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: validate
+
+server:
+  port: 8050
