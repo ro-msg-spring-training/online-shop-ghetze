@@ -12,5 +12,6 @@ import java.util.UUID;
 public class EntityWithID {
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private UUID id = UUID.randomUUID();
 }
