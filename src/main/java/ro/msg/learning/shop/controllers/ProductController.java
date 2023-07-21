@@ -13,8 +13,6 @@ import ro.msg.learning.shop.services.interfaces.ProductService;
 import java.util.List;
 import java.util.UUID;
 
-import static java.util.stream.Collectors.*;
-
 @RestController
 @AllArgsConstructor
 @RequestMapping("/products")
@@ -27,7 +25,7 @@ public class ProductController {
 	@GetMapping
 	public ResponseEntity<List<ProductDTO>> getAll() {
 		List<Product> products = productService.getAll();
-		List<ProductDTO> productDTOS = products.stream().map(ProductMapper::toDTO).collect(toList());
+		List<ProductDTO> productDTOS = products.stream().map(ProductMapper::toDTO).toList();
 		return new ResponseEntity<>(productDTOS, HttpStatus.OK);
 	}
 

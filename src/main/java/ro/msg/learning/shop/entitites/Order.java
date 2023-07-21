@@ -1,7 +1,9 @@
 package ro.msg.learning.shop.entitites;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
@@ -10,6 +12,8 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "orders")
 public class Order extends EntityWithID {
 	@ManyToOne
@@ -31,6 +35,6 @@ public class Order extends EntityWithID {
 	@Column(name = "address_street")
 	private String addressStreet;
 
-	@OneToMany(mappedBy = "order")
+	@OneToMany(mappedBy = "order",cascade= CascadeType.ALL)
 	private List<OrderDetail> orderDetailsList;
 }
