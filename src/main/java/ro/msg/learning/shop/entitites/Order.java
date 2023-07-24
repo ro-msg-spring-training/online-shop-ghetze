@@ -1,7 +1,15 @@
 package ro.msg.learning.shop.entitites;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Column;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
@@ -10,6 +18,8 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "orders")
 public class Order extends EntityWithID {
 	@ManyToOne
@@ -31,6 +41,6 @@ public class Order extends EntityWithID {
 	@Column(name = "address_street")
 	private String addressStreet;
 
-	@OneToMany(mappedBy = "order")
+	@OneToMany(mappedBy = "order",cascade= CascadeType.ALL)
 	private List<OrderDetail> orderDetailsList;
 }
