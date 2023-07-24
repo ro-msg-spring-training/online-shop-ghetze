@@ -15,10 +15,10 @@ public class LocationConfiguration {
 
 	@Bean
 	public LocationStrategy locationStrategy() {
-
 		return switch (strategy) {
 			case MOST_ABUNDANT -> new MostAbundantLocationImpl();
-			default -> new SingleLocationImp();
+			case SINGLE -> new SingleLocationImp();
+			default -> throw new IllegalArgumentException("Invalid strategy: " + strategy);
 		};
 	}
 }
