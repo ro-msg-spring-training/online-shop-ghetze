@@ -12,7 +12,7 @@ import java.util.UUID;
 @Repository
 public interface StockRepository extends JpaRepository<Stock, UUID> {
 
-	@Query(value = "Select * from stock where product_id = :productId AND quantity >= :quantity order by quantity desc",nativeQuery = true)
+	@Query(value = "Select * from stock where product_id = :productId AND quantity >= :quantity",nativeQuery = true)
 	List<Stock> findStockByProductAndQuantityOrderDescByQuantity(@Param("productId") UUID productId, @Param("quantity") Integer quantity);
 
 }

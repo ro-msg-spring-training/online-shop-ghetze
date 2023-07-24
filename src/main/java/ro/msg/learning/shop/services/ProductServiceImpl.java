@@ -29,7 +29,6 @@ public class ProductServiceImpl implements ProductService {
 	public Product getById(UUID id) {
 		Product product = productRepository.findById(id).orElse(null);
 		if (product == null) {
-			log.warn(PRODUCT_NOT_FOUND_MESSAGE + id);
 			throw new ResourceNotFoundException(PRODUCT_NOT_FOUND_MESSAGE + id);
 		}
 		return product;
@@ -43,7 +42,6 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public Product update(Product product) {
 		if(productRepository.findById(product.getId()).orElse(null) == null) {
-			log.warn(PRODUCT_NOT_FOUND_MESSAGE + product.getId());
 			throw new ResourceNotFoundException(PRODUCT_NOT_FOUND_MESSAGE + product.getId());
 		}
 		return productRepository.save(product);
@@ -53,7 +51,6 @@ public class ProductServiceImpl implements ProductService {
 	public void delete(UUID id) {
 		if (productRepository.findById(id).orElse(null) == null)
 		{
-			log.warn(PRODUCT_NOT_FOUND_MESSAGE + id);
 			throw new ResourceNotFoundException(PRODUCT_NOT_FOUND_MESSAGE + id);
 		}
 		productRepository.deleteById(id);

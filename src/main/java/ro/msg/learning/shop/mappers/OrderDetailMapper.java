@@ -5,7 +5,6 @@ import ro.msg.learning.shop.dtos.OrderDetailDTO;
 import ro.msg.learning.shop.entitites.OrderDetail;
 import ro.msg.learning.shop.entitites.Product;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -28,22 +27,11 @@ public class OrderDetailMapper {
 	}
 
 	public static List<OrderDetail> toListEntity(List<OrderDetailDTO> orderDetailListDTO) {
-		List<OrderDetail> orderDetail = new ArrayList<>();
-		for (OrderDetailDTO createdOrderedDetailDTO : orderDetailListDTO) {
-			orderDetail.add(toEntity(createdOrderedDetailDTO));
-		}
-		return orderDetail;
+		return orderDetailListDTO.stream().map(dto->toEntity(dto)).toList();
 	}
 
 	public static List<OrderDetailDTO> toListDto(List<OrderDetail> orderDetailList) {
-		List<OrderDetailDTO> orderDetailDTO = new ArrayList<>();
-		for (OrderDetail orderDetail : orderDetailList) {
-			OrderDetailDTO crtOrderDetailDTO = toDto(orderDetail);
-			crtOrderDetailDTO.setProductId(orderDetail.getProduct().getId());
-			crtOrderDetailDTO.setQuantity(orderDetail.getQuantity());
-			orderDetailDTO.add(crtOrderDetailDTO);
-		}
-		return orderDetailDTO;
+		return orderDetailList.stream().map(entity->toDto(entity)).toList();
 	}
 
 }

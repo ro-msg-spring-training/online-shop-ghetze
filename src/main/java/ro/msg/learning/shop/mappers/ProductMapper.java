@@ -6,6 +6,8 @@ import ro.msg.learning.shop.entitites.Product;
 import ro.msg.learning.shop.entitites.ProductCategory;
 import ro.msg.learning.shop.entitites.Supplier;
 
+import java.util.List;
+
 @Component
 public class ProductMapper {
 
@@ -39,5 +41,13 @@ public class ProductMapper {
 			product.setImageUrl(dto.getImageUrl());
 			product.setSupplier(supplier);
 			return product;
+	}
+
+	public static List<ProductDTO> mapEntityListToDtoList(List<Product> entities){
+			return entities.stream().map(entity->toDTO(entity)).toList();
+	}
+
+	public static List<Product> mapDTOListToEntityList(List<ProductDTO> entities){
+		return entities.stream().map(dto->toEntity(dto)).toList();
 	}
 }

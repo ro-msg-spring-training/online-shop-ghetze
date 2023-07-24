@@ -68,7 +68,7 @@ public class OrderServiceImpl  implements OrderService {
 		order.getOrderDetailsList().forEach(orderDetail -> {
 				var productId = orderDetail.getProduct().getId();
 
-				//get a list with all locations with sufficient stock for a product order desc by quantity.
+				//get a list with all locations with sufficient stock for a product.
 				List<Stock> productStocks = stockRepository.findStockByProductAndQuantityOrderDescByQuantity(productId, orderDetail.getQuantity());
 				if (productStocks.isEmpty())
 				{
@@ -82,15 +82,15 @@ public class OrderServiceImpl  implements OrderService {
 		Map<UUID, List<Stock>> stocksGroupedByLocationId = allStocksWithAllProducts.stream().collect(Collectors.groupingBy(stock->stock.getLocation().getId()));
 
 		//get the first location_id which contain all the products.
-		for (Map.Entry<UUID, List<Stock>> entry : stocksGroupedByLocationId.entrySet()) {
-			if (entry.getValue().size() == order.getOrderDetailsList().size()) {
-				availableStocks.addAll(entry.getValue());
-				break;
-			}
-		}
+		Map.Entry<UUID, List<Stock>> matchingEntry = stocksGroupedByLocationId.entrySet().stream()
+			.filter(entry -> entry.getValue().size() == order.getOrderDetailsList().size())
+			.findFirst()
+			.orElse(null);
 
-		//in case there is not a single location with all products on stock throw OrderException
-		if (availableStocks.isEmpty())
+		if (matchingEntry != null) {
+			availableStocks.addAll(matchingEntry.getValue());
+		}
+		else
 		{
 			throw new OrderException(MESSAGE_NO_LOCATION_WITH_ALL_PRODUCTS);
 		}

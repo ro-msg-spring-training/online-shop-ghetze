@@ -13,18 +13,17 @@ import java.util.Map;
 @Slf4j
 public class ControllerAdvisor{
 
-	private static final String MESSAGE_EXCEPTION_OCCURRED = "An exception occurred";
-	private static final String MESSAGE_TIMESTAMP = "timestamp";
+	private static final String MESSAGE_EXCEPTION_OCCURRED = "An exception occurred : ";
+	private static final String MESSAGE_TIMESTAMP = "Timestamp:";
 	private static final String MESSAGE_MSG = "message";
 	private static final String MESSAGE_INTERNAL_SERVER_EXCEPTION = "An internal server error occurred.Please contact you administrator.";
 
 	@ExceptionHandler(ResourceNotFoundException.class)
 	public ResponseEntity<Object> handleResourceNotFoundException(
 		ResourceNotFoundException ex) {
-		log.error(MESSAGE_EXCEPTION_OCCURRED,ex);
 
+		log.error(MESSAGE_TIMESTAMP + LocalDateTime.now() +  MESSAGE_EXCEPTION_OCCURRED,ex);
 		Map<String, Object> body = new LinkedHashMap<>();
-		body.put(MESSAGE_TIMESTAMP, LocalDateTime.now());
 		body.put(MESSAGE_MSG, ex.getMessage());
 
 		return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
@@ -34,9 +33,8 @@ public class ControllerAdvisor{
 	public ResponseEntity<Object> handleOrderException(
 		OrderException ex) {
 
-		log.error(MESSAGE_EXCEPTION_OCCURRED,ex);
+		log.error(MESSAGE_TIMESTAMP + LocalDateTime.now() + MESSAGE_EXCEPTION_OCCURRED,ex);
 		Map<String, Object> body = new LinkedHashMap<>();
-		body.put(MESSAGE_TIMESTAMP, LocalDateTime.now());
 		body.put(MESSAGE_MSG, ex.getMessage());
 
 		return new ResponseEntity<>(body, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -45,9 +43,8 @@ public class ControllerAdvisor{
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<Object> handleException(Exception ex){
 
-		log.error(MESSAGE_EXCEPTION_OCCURRED,ex);
+		log.error(MESSAGE_TIMESTAMP + LocalDateTime.now() + MESSAGE_EXCEPTION_OCCURRED,ex);
 		Map<String, Object> body = new LinkedHashMap<>();
-		body.put(MESSAGE_TIMESTAMP, LocalDateTime.now());
 		body.put(MESSAGE_MSG, MESSAGE_INTERNAL_SERVER_EXCEPTION);
 
 		return new ResponseEntity<>(body, HttpStatus.INTERNAL_SERVER_ERROR);

@@ -4,7 +4,13 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import ro.msg.learning.shop.dtos.ProductDTO;
 import ro.msg.learning.shop.entitites.Product;
 import ro.msg.learning.shop.mappers.ProductMapper;
@@ -25,7 +31,7 @@ public class ProductController {
 	@GetMapping
 	public ResponseEntity<List<ProductDTO>> getAll() {
 		List<Product> products = productService.getAll();
-		List<ProductDTO> productDTOS = products.stream().map(ProductMapper::toDTO).toList();
+		List<ProductDTO> productDTOS = ProductMapper.mapEntityListToDtoList(products);
 		return new ResponseEntity<>(productDTOS, HttpStatus.OK);
 	}
 
