@@ -18,4 +18,6 @@ public interface StockRepository extends JpaRepository<Stock, UUID> {
 	@Query(value = "Select * from stock where product_id = :productId AND quantity >= :quantity",nativeQuery = true)
 	List<Stock> findStockByProductAndQuantity(@Param("productId") UUID productId, @Param("quantity") Integer quantity);
 
+	List<Stock> findByLocationId(UUID locationId);
+
 }
