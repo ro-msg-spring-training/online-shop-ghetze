@@ -1,7 +1,6 @@
 package ro.msg.learning.shop.services;
 
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ro.msg.learning.shop.entitites.Product;
@@ -14,7 +13,6 @@ import java.util.UUID;
 
 @Service
 @AllArgsConstructor
-@Slf4j
 public class ProductServiceImpl implements ProductService {
 	private static final String PRODUCT_NOT_FOUND_MESSAGE = "Requested product id was not found: ";
 	@Autowired
