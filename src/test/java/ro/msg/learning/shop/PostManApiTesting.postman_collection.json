@@ -1,0 +1,320 @@
+{
+	"info": {
+		"_postman_id": "0b3779d6-5c01-488c-a46b-b1e3b2e4caf3",
+		"name": "1.PostManApiTesting",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "6592293"
+	},
+	"item": [
+		{
+			"name": "API tests Setup-Tests- Teardown",
+			"item": [
+				{
+					"name": "1.Populate db.",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"response status is ok\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8050/test/database",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8050",
+							"path": [
+								"test",
+								"database"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2.Create order successfully",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var moment = require('moment');\r",
+									"pm.environment.set('createdAt', moment().format((\"YYYY-MM-DD HH:mm:ss\")));"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"response status is ok\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "513FC02E9D6A4E9BBB83A8EDFEC891652",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"productsOrdered\": [\r\n    {\r\n      \"productId\": \"331e4cdd-bb78-4769-a0c7-cb948a9f1231\",\r\n      \"quantity\": 1\r\n    },\r\n    {\r\n      \"productId\": \"331e4cdd-bb78-4769-a0c7-cb948a9f1232\",\r\n      \"quantity\": 1\r\n    }\r\n  ],\r\n  \"createdAt\": \"2020-07-11T10:30:00\",\r\n  \"addressCountry\": \"Romania\", \r\n  \"addressCity\": \"Floresti\",\r\n  \"addressStreet\": \"Sub cetate\",\r\n  \"addressCounty\": \"Cluj\",\r\n  \"customerId\": \"631e4cdd-bb78-4769-a0c7-cb948a9f1231\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8050/orders",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8050",
+							"path": [
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "3.Create order failed - missing stock",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var moment = require('moment');\r",
+									"pm.environment.set('createdAt', moment().format((\"YYYY-MM-DD HH:mm:ss\")));"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"response status is ok\", function () {\r",
+									"    pm.response.to.have.status(500);\r",
+									"    pm.response.to.have.jsonBody(\"message\",\"There are no sufficient stocks for your products\")\r",
+									"    });\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "513FC02E9D6A4E9BBB83A8EDFEC891652",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"productsOrdered\": [\r\n    {\r\n      \"productId\": \"331e4cdd-bb78-4769-a0c7-cb948a9f1231\",\r\n      \"quantity\": 100\r\n    },\r\n    {\r\n      \"productId\": \"331e4cdd-bb78-4769-a0c7-cb948a9f1232\",\r\n      \"quantity\": 100\r\n    }\r\n  ],\r\n  \"createdAt\": \"2020-07-11T10:30:00\",\r\n  \"addressCountry\": \"Romania\", \r\n  \"addressCity\": \"Floresti\",\r\n  \"addressStreet\": \"Sub cetate\",\r\n  \"addressCounty\": \"Cluj\",\r\n  \"customerId\": \"631e4cdd-bb78-4769-a0c7-cb948a9f1231\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8050/orders",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8050",
+							"path": [
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "4.Create order failed - missing products",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var moment = require('moment');\r",
+									"pm.environment.set('createdAt', moment().format((\"YYYY-MM-DD HH:mm:ss\")));"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"response status is ok\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"    pm.response.to.have.jsonBody(\"message\",\"The following products are not available :331e4cdd-bb78-4769-a0c7-cb948a9f1238, 331e4cdd-bb78-4769-a0c7-cb948a9f1239\")\r",
+									"    });\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "513FC02E9D6A4E9BBB83A8EDFEC891652",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"productsOrdered\": [\r\n    {\r\n      \"productId\": \"331e4cdd-bb78-4769-a0c7-cb948a9f1238\",\r\n      \"quantity\": 1\r\n    },\r\n    {\r\n      \"productId\": \"331e4cdd-bb78-4769-a0c7-cb948a9f1239\",\r\n      \"quantity\": 1\r\n    }\r\n  ],\r\n  \"createdAt\": \"2020-07-11T10:30:00\",\r\n  \"addressCountry\": \"Romania\", \r\n  \"addressCity\": \"Floresti\",\r\n  \"addressStreet\": \"Sub cetate\",\r\n  \"addressCounty\": \"Cluj\",\r\n  \"customerId\": \"631e4cdd-bb78-4769-a0c7-cb948a9f1231\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8050/orders",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8050",
+							"path": [
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "5.get(export stocks for locationId)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"response status is ok\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"response json contains locations\", function () {\r",
+									"    const parse = require('csv-parse/lib/sync');\r",
+									"    const responseJson = parse(pm.response.text());\r",
+									"    pm.expect(responseJson).to.have.length.greaterThan(0);\r",
+									"    pm.expect(responseJson[0]).to.deep.equal([\"id\", \"locationId\", \"productId\", \"quantity\"])\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "513FC02E9D6A4E9BBB83A8EDFEC891652",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8050/stocks/431e4cdd-bb78-4769-a0c7-cb948a9f1231",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8050",
+							"path": [
+								"stocks",
+								"431e4cdd-bb78-4769-a0c7-cb948a9f1231"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "6.Clean db data",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"response status is ok\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8050/test/database",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8050",
+							"path": [
+								"test",
+								"database"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
