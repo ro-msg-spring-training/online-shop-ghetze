@@ -18,7 +18,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class MostAbundantLocationImplTest {
+class MostAbundantLocationImplTest {
 	@Mock
 	private StockRepository stockRepository;
 
@@ -26,7 +26,7 @@ public class MostAbundantLocationImplTest {
 	private MostAbundantLocationImpl locationStrategy ;
 
 	@Test
-	public void findStocksForOrder_whenThereIsNotASingleLocationForAllProducts_shouldReturnOrderException() {
+	void findStocksForOrder_whenThereIsNotASingleLocationForAllProducts_shouldReturnOrderException() {
 
 		//create order with 2 products
 		var order = TestingUtils.createOrder(
@@ -41,20 +41,20 @@ public class MostAbundantLocationImplTest {
 	}
 
 	@Test
-	public void findStocksForOrder_whenThereAreMultipleStocks_shouldReturnBiggestStock() {
+	void findStocksForOrder_whenThereAreMultipleStocks_shouldReturnBiggestStock() {
 
 		var product1UUID = UUID.fromString("331e4cdd-bb78-4769-a0c7-cb948a9f1231");
 
 		//create order with 1 product and quantity 1
 		var order = TestingUtils.createOrderWithOneProductAndGivenQuantity(product1UUID,1);
 
-		//there are 2 stocks available one for the product with 2 diferrent quantities (10 and 20)
+		//there are 2 stocks available one for the product with 2 different quantities (10 and 20)
 		when(stockRepository.findStockByProductAndQuantityOrderDescByQuantity(product1UUID,1)).thenReturn(TestingUtils.returnStocksWithDifferentQuantities(false,product1UUID));
 
 		List<Stock> availableStocks = locationStrategy.getAvailableStocks(order);
 		//only one stock should be returned.
 		assertEquals(1, availableStocks.size());
-		//check to see if the selected stock is the one with thew bigest quantity = 20
+		//check to see if the selected stock is the one with the biggest quantity = 20
 		assertEquals(20, (int) availableStocks.get(0).getQuantity());
 
 	}
