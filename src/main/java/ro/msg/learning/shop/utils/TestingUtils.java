@@ -15,8 +15,11 @@ public class TestingUtils {
 		"Sean",
 		"John",
 		"seanjohn",
-		"String password",
+		"$2a$04$DGY67JmLYM08juIEw1dMz.0gIp8lyiyxzTL0pp5BV9e5evxq/DO0q",
 		"seanjohn@yahoo.com");
+	// BCryptPasswordEncoder : sa
+
+
 	public static final  Location location1Floresti = new Location (
 		UUID.fromString("431e4cdd-bb78-4769-a0c7-cb948a9f1231"),
 		"Floresti",
