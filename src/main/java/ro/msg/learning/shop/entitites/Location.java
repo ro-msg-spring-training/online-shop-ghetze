@@ -5,17 +5,29 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Getter
 @Setter
 @Table(name = "location")
+@NoArgsConstructor
 public class Location extends EntityWithID {
 	@Column(name = "name")
 	private String name;
+
+	public Location(UUID id, String name, String addressCountry, String addressCity, String addressCounty, String addressStreet) {
+		super(id);
+		this.name = name;
+		this.addressCountry = addressCountry;
+		this.addressCity = addressCity;
+		this.addressCounty = addressCounty;
+		this.addressStreet = addressStreet;
+	}
 
 	@Column(name = "address_country")
 	private String addressCountry;

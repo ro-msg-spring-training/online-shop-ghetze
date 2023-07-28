@@ -14,7 +14,7 @@ public interface ProductRepository extends JpaRepository<Product, UUID> {
 
 	//We are using byte[] instead of UUID so UUID conversion will not be a problem when
 	//working with both PostgresSQL (for production) and H2 in memory database (for testing).
-	@Query(value = "SELECT p.id FROM product p WHERE p.id IN (:productIds)", nativeQuery = true)
-	List<byte[]> findAllByIds(@Param("productIds") List<byte[]> productIds);
+	@Query(value = "SELECT p.id FROM Product p WHERE p.id IN (:productIds)")
+	List<UUID> findExistingProductUUIDs(@Param("productIds") List<UUID> productIds);
 
 }

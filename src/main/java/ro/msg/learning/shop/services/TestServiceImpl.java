@@ -3,16 +3,19 @@ package ro.msg.learning.shop.services;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 import ro.msg.learning.shop.services.interfaces.TestService;
 import ro.msg.learning.shop.entitites.*;
 import ro.msg.learning.shop.repositories.*;
 import ro.msg.learning.shop.utils.TestingUtils;
 
-import java.util.List;
+import java.util.UUID;
 
 @Service
 @AllArgsConstructor
+@Profile("test")
 public class TestServiceImpl implements TestService {
 	@Autowired
 	private final ProductRepository productRepository;
@@ -34,9 +37,17 @@ public class TestServiceImpl implements TestService {
 	@Override
 	@Transactional
 	public void populateDatabase() {
-
-		List<EntityWithID> entities = TestingUtils.getEntities();
-		entities.forEach(entity -> saveEntity(entity));
+		saveEntity(TestingUtils.supplier1Emag,supplierRepository);
+		saveEntity(TestingUtils.supplier2Altex,supplierRepository);
+		saveEntity(TestingUtils.laptopProductCategory,productCategoryRepository);
+		saveEntity(TestingUtils.mobileLaptopCategory,productCategoryRepository);
+		saveEntity(TestingUtils.productSamsungMobilePhone,productRepository);
+		saveEntity(TestingUtils.productLenovoLaptop, productRepository);
+		saveEntity(TestingUtils.customer,customerRepository);
+		saveEntity(TestingUtils.location2Cluj,locationRepository);
+		saveEntity(TestingUtils.location1Floresti,locationRepository);
+		saveEntity(TestingUtils.stockSamsungMobilePhoneQuantity10Location1,stockRepository);
+		saveEntity(TestingUtils.stockLenovoLaptopQuantity20Location1,stockRepository);
 	}
 
 	@Override
@@ -52,33 +63,9 @@ public class TestServiceImpl implements TestService {
 			supplierRepository.deleteAllInBatch();
 	}
 
-	private void saveEntity(EntityWithID entity) {
-		if (entity instanceof Supplier) {
-			var savedEntity = supplierRepository.save((Supplier) entity);
-			entity.setId(savedEntity.getId());
-		} else if (entity instanceof ProductCategory) {
-			var savedEntity = productCategoryRepository.save((ProductCategory) entity);
-			entity.setId(savedEntity.getId());
-		} else if (entity instanceof Product) {
-			var savedEntity = productRepository.save((Product) entity);
-			entity.setId(savedEntity.getId());
-		} else if (entity instanceof Customer) {
-			var savedEntity = customerRepository.save((Customer) entity);
-			entity.setId(savedEntity.getId());
-		} else if (entity instanceof Location) {
-			var savedEntity = locationRepository.save((Location) entity);
-			entity.setId(savedEntity.getId());
-		} else if (entity instanceof Stock) {
-			var savedEntity = stockRepository.save((Stock) entity);
-			entity.setId(savedEntity.getId());
-		} else if (entity instanceof Order) {
-			var savedEntity = orderRepository.save((Order) entity);
-			entity.setId(savedEntity.getId());
-		} else if (entity instanceof OrderDetail) {
-			var savedEntity = orderDetailRepository.save((OrderDetail) entity);
-			entity.setId(savedEntity.getId());
-		} else throw new IllegalArgumentException("Unsupported entity type: " + entity.getClass().getSimpleName());
+	// Generic method to save an entity and set its ID
+	public <T extends EntityWithID> void saveEntity(T entity, JpaRepository<T, UUID> repository) {
+		T savedEntity = repository.save(entity);
+		entity.setId(savedEntity.getId());
 	}
-
-
 }

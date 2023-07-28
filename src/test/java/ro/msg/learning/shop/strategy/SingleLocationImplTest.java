@@ -11,7 +11,6 @@ import ro.msg.learning.shop.repositories.StockRepository;
 import ro.msg.learning.shop.utils.TestingUtils;
 
 import java.util.List;
-import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -28,9 +27,7 @@ class SingleLocationImplTest {
 	@Test
 	void findStocksForOrder_whenThereIsNotASingleLocationForAllProducts_shouldReturnOrderException() {
 
-		var order = TestingUtils.createOrder(
-			UUID.fromString("331e4cdd-bb78-4769-a0c7-cb948a9f1231"),
-			UUID.fromString("331e4cdd-bb78-4769-a0c7-cb948a9f1232"));
+		var order = TestingUtils.orderEntityWithPhoneAndLaptopProducts;
 
 		//there are no stocks available.
 		when(stockRepository.findStockByProductAndQuantity(any(),any())).thenReturn(List.of());
@@ -41,16 +38,20 @@ class SingleLocationImplTest {
 
 	@Test
 	void findStocksForOrder_whenThereAreStocksInSameLocation_shouldReturn2ItemsList() {
-		var product3UUID = UUID.fromString("331e4cdd-bb78-4769-a0c7-cb948a9f1233");
-		var product4UUID = UUID.fromString("331e4cdd-bb78-4769-a0c7-cb948a9f1234");
 
-		var location1UUID = UUID.fromString("431e4cdd-bb78-4769-a0c7-cb948a9f1231");
+		var order = TestingUtils.orderEntityWithPhoneAndLaptopProducts;
 
-		var order = TestingUtils.createOrder(product3UUID,product4UUID);
+		List<Stock> stockForSamsungMobilePhone = List.of(
+			TestingUtils.stockSamsungMobilePhoneQuantity30Location1
+		);
+
+		List<Stock> stockForLenovoLaptop = List.of(
+			TestingUtils.stockLenovoLaptopQuantity20Location1
+		);
 
 		//there are 2 stocks available one for each product.
-		when(stockRepository.findStockByProductAndQuantity(product3UUID,1)).thenReturn(TestingUtils.returnStockList(product3UUID,location1UUID));
-		when(stockRepository.findStockByProductAndQuantity(product4UUID,1)).thenReturn(TestingUtils.returnStockList(product4UUID,location1UUID));
+		when(stockRepository.findStockByProductAndQuantity(TestingUtils.productSamsungMobilePhone.getId(),1)).thenReturn(stockForSamsungMobilePhone);
+		when(stockRepository.findStockByProductAndQuantity(TestingUtils.productLenovoLaptop.getId(),1)).thenReturn(stockForLenovoLaptop);
 
 		List<Stock> availableStocks = locationStrategy.getAvailableStocks(order);
 		assertEquals(2, availableStocks.size());

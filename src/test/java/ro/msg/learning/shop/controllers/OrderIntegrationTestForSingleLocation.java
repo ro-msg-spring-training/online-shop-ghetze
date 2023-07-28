@@ -1,5 +1,6 @@
 package ro.msg.learning.shop.controllers;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -14,6 +15,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import ro.msg.learning.shop.ShopApplication;
+import ro.msg.learning.shop.utils.TestingUtils;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -23,9 +26,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ActiveProfiles("test")
 @TestPropertySource(locations = "classpath:application-test.properties", properties = {"location.strategy=single"})
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class SingleLocationOrderControllerIntegrationTest {
+class OrderForSingleLocationIntegrationTest {
 	@Autowired
 	public MockMvc mockMvc;
+	@Autowired
+	public ObjectMapper mapper;
 	private static final String MESSAGE_PRODUCTS_NO_STOCKS = "There are no sufficient stocks for your products";
 
 	@BeforeAll
@@ -40,27 +45,8 @@ class SingleLocationOrderControllerIntegrationTest {
 
 	@Test
 	void createOrder_thenStatus200() throws Exception {
-		String jsonRequestBody = """
-			{
-			  "id":"777e4cdd-bb78-4769-a0c7-cb948a9f1231",
-			  "productsOrdered": [
-			    {
-			      "productId": "331e4cdd-bb78-4769-a0c7-cb948a9f1231",
-			      "quantity": 1
-			    },
-			    {
-			      "productId": "331e4cdd-bb78-4769-a0c7-cb948a9f1232",
-			      "quantity": 1
-			    }
-			  ],
-			  
-			  "createdAt": "2023-07-11T10:30:00",
-			  "addressCountry": "Romania",
-			  "addressCity": "Floresti",
-			  "addressStreet": "Sub cetate",
-			  "addressCounty": "Cluj",
-			  "customerId": "631e4cdd-bb78-4769-a0c7-cb948a9f1231"
-			}""";
+		var ow = mapper.writer().withDefaultPrettyPrinter();
+		var jsonRequestBody = ow.writeValueAsString(TestingUtils.orderDTOWith2productsAndQuantity1);
 
 		mockMvc.perform(MockMvcRequestBuilders.post("/orders")
 				.contentType(MediaType.APPLICATION_JSON)
@@ -70,27 +56,8 @@ class SingleLocationOrderControllerIntegrationTest {
 
 	@Test
 	void createOrder_failedDueToMissingStock() throws Exception {
-		String jsonRequestBody = """
-			{
-			  "id":"777e4cdd-bb78-4769-a0c7-cb948a9f1231",
-			  "productsOrdered": [
-			    {
-			      "productId": "331e4cdd-bb78-4769-a0c7-cb948a9f1231",
-			      "quantity": 30
-			    },
-			    {
-			      "productId": "331e4cdd-bb78-4769-a0c7-cb948a9f1232",
-			      "quantity": 30
-			    }
-			  ],
-			  "createdAt": "2023-07-11T10:30:00",
-			   "addressCountry": "Romania",
-			   "addressCity": "Floresti",
-			   "addressStreet": "Sub cetate",
-			   "addressCounty": "Cluj"
-			  },
-			  "customerId": "631e4cdd-bb78-4769-a0c7-cb948a9f1231"
-			}""";
+		var ow = mapper.writer().withDefaultPrettyPrinter();
+		var jsonRequestBody = ow.writeValueAsString(TestingUtils.orderDTOWith2productsAndQuantityBiggerThenStocks);
 
 		mockMvc.perform(MockMvcRequestBuilders.post("/orders")
 				.contentType(MediaType.APPLICATION_JSON)

@@ -14,7 +14,6 @@ import ro.msg.learning.shop.entitites.Stock;
 import ro.msg.learning.shop.repositories.OrderRepository;
 import ro.msg.learning.shop.repositories.StockRepository;
 
-import java.nio.ByteBuffer;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -77,10 +76,7 @@ public class OrderServiceImpl  implements OrderService {
 		List<UUID> orderedProducts= order.getOrderDetailsList().stream().map(item->item.getProduct().getId()).collect(Collectors.toList());
 
 		//check products repo for existing products, the method expects List<String>, so it will work on both sql and h2 databases.
-		List<byte[]> foundProductsInBytes = productRepository.findAllByIds(orderedProducts.stream().map(item->toBytes(item)).collect(Collectors.toList()));
-
-		var foundProducts = foundProductsInBytes.stream().map(item->fromBytes(item)).collect(Collectors.toList());
-
+		List<UUID> foundProducts = productRepository.findExistingProductUUIDs(orderedProducts);
 		//filter not found products
 		List<UUID> notFoundProductsIds = orderedProducts.stream()
 			.filter(product -> !foundProducts.contains(product))
@@ -91,24 +87,5 @@ public class OrderServiceImpl  implements OrderService {
 			throw new ResourceNotFoundException(
 				PRODUCTS_NOT_AVAILABLE + notFoundProductsIds.stream().map(item->item.toString()).collect(Collectors.joining(", "))
 			);
-	}
-
-	private byte[] toBytes(UUID uuid) {
-		ByteBuffer bb = ByteBuffer.wrap(new byte[16]);
-		bb.putLong(uuid.getMostSignificantBits());
-		bb.putLong(uuid.getLeastSignificantBits());
-		return bb.array();
-	}
-
-	private UUID fromBytes(byte[] bytes) {
-		if (bytes == null || bytes.length != 16) {
-			throw new IllegalArgumentException("Invalid byte array to convert to UUID.");
-		}
-
-		ByteBuffer bb = ByteBuffer.wrap(bytes);
-		long mostSigBits = bb.getLong();
-		long leastSigBits = bb.getLong();
-
-		return new UUID(mostSigBits, leastSigBits);
 	}
 }
