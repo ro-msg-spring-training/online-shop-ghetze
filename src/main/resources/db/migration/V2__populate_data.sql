@@ -21,8 +21,8 @@ INSERT INTO stock (id,quantity, location_id, product_id) VALUES
     ('531e4cdd-bb78-4769-a0c7-cb948a9f1232',20, '431e4cdd-bb78-4769-a0c7-cb948a9f1232', '331e4cdd-bb78-4769-a0c7-cb948a9f1232');
 
 INSERT INTO customer (id,email_address, first_name, last_name, password, username) VALUES
-    ('631e4cdd-bb78-4769-a0c7-cb948a9f1231','johndoe@microsoft.com', 'John', 'Doe', 'sa', 'johndoe'),
-    ('631e4cdd-bb78-4769-a0c7-cb948a9f1232','seanjohn@cloudflare.com', 'Sean', 'John', 'sa', 'seanjean');
+    ('631e4cdd-bb78-4769-a0c7-cb948a9f1231','johndoe@microsoft.com', 'John', 'Doe', '$2a$04$DGY67JmLYM08juIEw1dMz.0gIp8lyiyxzTL0pp5BV9e5evxq/DO0q', 'johndoe'),
+    ('631e4cdd-bb78-4769-a0c7-cb948a9f1232','seanjohn@cloudflare.com', 'Sean', 'John', '$2a$04$DGY67JmLYM08juIEw1dMz.0gIp8lyiyxzTL0pp5BV9e5evxq/DO0q', 'seanjean');
 
 INSERT INTO orders (id,address_city, address_country, address_street, created_at, customer_id) VALUES
     ('731e4cdd-bb78-4769-a0c7-cb948a9f1231','Zalau', 'Romania', 'h47 B.P.Hasdeu street', '2023-04-17 18:47:52.69', '631e4cdd-bb78-4769-a0c7-cb948a9f1231'),

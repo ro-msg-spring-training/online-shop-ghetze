@@ -21,4 +21,6 @@ public class LocationConfiguration {
 			default -> throw new IllegalArgumentException("Invalid strategy: " + strategy);
 		};
 	}
+
+
 }
