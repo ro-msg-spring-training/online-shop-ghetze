@@ -10,14 +10,16 @@ import java.util.List;
 import java.util.UUID;
 
 public class TestingUtils {
+
+	    public static final String customerPassword = "sa";
+
 		public static final Customer customer = new Customer(
 		UUID.fromString("631e4cdd-bb78-4769-a0c7-cb948a9f1231"),
-		"Sean",
 		"John",
-		"seanjohn",
+		"Doe",
+		"johndoe",
 		"$2a$04$DGY67JmLYM08juIEw1dMz.0gIp8lyiyxzTL0pp5BV9e5evxq/DO0q",
-		"seanjohn@yahoo.com");
-	// BCryptPasswordEncoder : sa
+		"johndoe@microsoft.com");
 
 
 	public static final  Location location1Floresti = new Location (
