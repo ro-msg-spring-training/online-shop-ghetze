@@ -22,6 +22,7 @@ import java.util.List;
 @NoArgsConstructor
 @Table(name = "orders")
 public class Order extends EntityWithID {
+
 	@ManyToOne
 	@JoinColumn(name = "customer_id")
 	private Customer customer;
