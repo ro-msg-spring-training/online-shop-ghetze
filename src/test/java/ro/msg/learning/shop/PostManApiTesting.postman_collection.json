@@ -1,13 +1,338 @@
 {
 	"info": {
-		"_postman_id": "0b3779d6-5c01-488c-a46b-b1e3b2e4caf3",
-		"name": "1.PostManApiTesting",
+		"_postman_id": "8dbb41fd-27dc-458f-8cba-27f469f89211",
+		"name": "1_OnlineShopSpring_Products",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "6592293"
 	},
 	"item": [
 		{
-			"name": "API tests Setup-Tests- Teardown",
+			"name": "Product_withBasicAuth",
+			"item": [
+				{
+					"name": "get all products",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "sa",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "johndoe",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8050/products",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8050",
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create product",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "sa",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "johndoe",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\":\"331e4cdd-bb78-4769-a0c7-cb948a9f1233\",\r\n    \"name\": \"Product new\",\r\n    \"description\": \"Product new description\",\r\n    \"price\": 9.99,\r\n    \"weight\": 10.0,\r\n    \"imageUrl\": \"https//test.com/image.jpg\",\r\n    \"categoryId\": \"231e4cdd-bb78-4769-a0c7-cb948a9f1231\",\r\n    \"supplierId\": \"131e4cdd-bb78-4769-a0c7-cb948a9f1231\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8050/products",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8050",
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update product",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "sa",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "johndoe",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"id\": \"331e4cdd-bb78-4769-a0c7-cb948a9f1233\",\r\n        \"name\": \"Product new updated\",\r\n        \"description\": \"Product new updated description\",\r\n        \"price\": 19.99,\r\n        \"weight\": 19.9,\r\n        \"imageUrl\": \"https//test.com/image.jpg\",\r\n        \"categoryId\": \"231e4cdd-bb78-4769-a0c7-cb948a9f1232\",\r\n        \"supplierId\": \"131e4cdd-bb78-4769-a0c7-cb948a9f1232\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8050/products/331e4cdd-bb78-4769-a0c7-cb948a9f1233",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8050",
+							"path": [
+								"products",
+								"331e4cdd-bb78-4769-a0c7-cb948a9f1233"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get product",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "johndoe",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "sa",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "513FC02E9D6A4E9BBB83A8EDFEC891652",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8050/products/331e4cdd-bb78-4769-a0c7-cb948a9f1231",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8050",
+							"path": [
+								"products",
+								"331e4cdd-bb78-4769-a0c7-cb948a9f1231"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete product",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "sa",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "johndoe",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "513FC02E9D6A4E9BBB83A8EDFEC891652",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"id\": 100006,\r\n        \"name\": \"new course\",\r\n        \"author\": \"in28minutes\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8050/products/331e4cdd-bb78-4769-a0c7-cb948a9f1233",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8050",
+							"path": [
+								"products",
+								"331e4cdd-bb78-4769-a0c7-cb948a9f1233"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Order_withBasicAuth",
+			"item": [
+				{
+					"name": "create order",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "sa",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "johndoe",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\":\"777e4cdd-bb78-4769-a0c7-cb948a9f1231\",\r\n  \"productsOrdered\": [\r\n    {\r\n      \"productId\": \"331e4cdd-bb78-4769-a0c7-cb948a9f1231\",\r\n      \"quantity\": 1\r\n    },\r\n    {\r\n      \"productId\": \"331e4cdd-bb78-4769-a0c7-cb948a9f1232\",\r\n      \"quantity\": 1\r\n    }\r\n  ],\r\n  \"createdAt\": \"2023-07-27T13:35:00\",\r\n  \"addressCountry\": \"Romania\", \r\n  \"addressCity\": \"Floresti\",\r\n  \"addressStreet\": \"Sub cetate\",\r\n  \"addressCounty\": \"Cluj\",\r\n  \"customerId\": \"631e4cdd-bb78-4769-a0c7-cb948a9f1231\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8050/orders",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8050",
+							"path": [
+								"orders"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Stock_withBasicAuth",
+			"item": [
+				{
+					"name": "get(export stocks for locationId)",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "johndoe",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "sa",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "513FC02E9D6A4E9BBB83A8EDFEC891652",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8050/stocks/431e4cdd-bb78-4769-a0c7-cb948a9f1231",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8050",
+							"path": [
+								"stocks",
+								"431e4cdd-bb78-4769-a0c7-cb948a9f1231"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "API tests setup-teardown_withNoAuth",
 			"item": [
 				{
 					"name": "1.Populate db.",
@@ -25,6 +350,21 @@
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "sa",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "johndoe",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"url": {
@@ -49,8 +389,19 @@
 							"listen": "prerequest",
 							"script": {
 								"exec": [
+									"// pm.sendRequest({\r",
+									"// url: 'http://localhost:8050/test/database',\r",
+									"// method: 'POST',\r",
+									"// });\r",
+									"\r",
 									"var moment = require('moment');\r",
-									"pm.environment.set('createdAt', moment().format((\"YYYY-MM-DD HH:mm:ss\")));"
+									"pm.environment.set('createdAt', moment().format((\"YYYY-MM-DD HH:mm:ss\")));\r",
+									"\r",
+									"\r",
+									"// pm.sendRequest({\r",
+									"// url: 'http://localhost:8050/test/database',\r",
+									"// method: 'DELETE',\r",
+									"// });"
 								],
 								"type": "text/javascript"
 							}
@@ -68,14 +419,23 @@
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "sa",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "johndoe",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
-						"header": [
-							{
-								"key": "x-api-key",
-								"value": "513FC02E9D6A4E9BBB83A8EDFEC891652",
-								"type": "text"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": "{\r\n  \"productsOrdered\": [\r\n    {\r\n      \"productId\": \"331e4cdd-bb78-4769-a0c7-cb948a9f1231\",\r\n      \"quantity\": 1\r\n    },\r\n    {\r\n      \"productId\": \"331e4cdd-bb78-4769-a0c7-cb948a9f1232\",\r\n      \"quantity\": 1\r\n    }\r\n  ],\r\n  \"createdAt\": \"2020-07-11T10:30:00\",\r\n  \"addressCountry\": \"Romania\", \r\n  \"addressCity\": \"Floresti\",\r\n  \"addressStreet\": \"Sub cetate\",\r\n  \"addressCounty\": \"Cluj\",\r\n  \"customerId\": \"631e4cdd-bb78-4769-a0c7-cb948a9f1231\"\r\n}",
@@ -106,8 +466,22 @@
 							"listen": "prerequest",
 							"script": {
 								"exec": [
+									"// pm.sendRequest({\r",
+									"// url: 'http://localhost:8050/test/database',\r",
+									"// method: 'DELETE',\r",
+									"// });\r",
+									"\r",
+									"// pm.sendRequest({\r",
+									"// url: 'http://localhost:8050/test/database',\r",
+									"// method: 'POST',\r",
+									"// });\r",
+									"\r",
+									"//setTimeout(5000);\r",
+									"\r",
 									"var moment = require('moment');\r",
-									"pm.environment.set('createdAt', moment().format((\"YYYY-MM-DD HH:mm:ss\")));"
+									"pm.environment.set('createdAt', moment().format((\"YYYY-MM-DD HH:mm:ss\")));\r",
+									"\r",
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -128,14 +502,11 @@
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "noauth"
+						},
 						"method": "POST",
-						"header": [
-							{
-								"key": "x-api-key",
-								"value": "513FC02E9D6A4E9BBB83A8EDFEC891652",
-								"type": "text"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": "{\r\n  \"productsOrdered\": [\r\n    {\r\n      \"productId\": \"331e4cdd-bb78-4769-a0c7-cb948a9f1231\",\r\n      \"quantity\": 100\r\n    },\r\n    {\r\n      \"productId\": \"331e4cdd-bb78-4769-a0c7-cb948a9f1232\",\r\n      \"quantity\": 100\r\n    }\r\n  ],\r\n  \"createdAt\": \"2020-07-11T10:30:00\",\r\n  \"addressCountry\": \"Romania\", \r\n  \"addressCity\": \"Floresti\",\r\n  \"addressStreet\": \"Sub cetate\",\r\n  \"addressCounty\": \"Cluj\",\r\n  \"customerId\": \"631e4cdd-bb78-4769-a0c7-cb948a9f1231\"\r\n}",
@@ -166,8 +537,23 @@
 							"listen": "prerequest",
 							"script": {
 								"exec": [
+									"// pm.sendRequest({\r",
+									"// url: 'http://localhost:8050/test/database',\r",
+									"// method: 'DELETE',\r",
+									"// });\r",
+									"\r",
+									"\r",
+									"// pm.sendRequest({\r",
+									"// url: 'http://localhost:8050/test/database',\r",
+									"// method: 'POST',\r",
+									"// });\r",
+									"\r",
+									"\r",
+									"\r",
 									"var moment = require('moment');\r",
-									"pm.environment.set('createdAt', moment().format((\"YYYY-MM-DD HH:mm:ss\")));"
+									"pm.environment.set('createdAt', moment().format((\"YYYY-MM-DD HH:mm:ss\")));\r",
+									"\r",
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -188,14 +574,11 @@
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "noauth"
+						},
 						"method": "POST",
-						"header": [
-							{
-								"key": "x-api-key",
-								"value": "513FC02E9D6A4E9BBB83A8EDFEC891652",
-								"type": "text"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": "{\r\n  \"productsOrdered\": [\r\n    {\r\n      \"productId\": \"331e4cdd-bb78-4769-a0c7-cb948a9f1238\",\r\n      \"quantity\": 1\r\n    },\r\n    {\r\n      \"productId\": \"331e4cdd-bb78-4769-a0c7-cb948a9f1239\",\r\n      \"quantity\": 1\r\n    }\r\n  ],\r\n  \"createdAt\": \"2020-07-11T10:30:00\",\r\n  \"addressCountry\": \"Romania\", \r\n  \"addressCity\": \"Floresti\",\r\n  \"addressStreet\": \"Sub cetate\",\r\n  \"addressCounty\": \"Cluj\",\r\n  \"customerId\": \"631e4cdd-bb78-4769-a0c7-cb948a9f1231\"\r\n}",
@@ -244,7 +627,16 @@
 							"listen": "prerequest",
 							"script": {
 								"exec": [
-									""
+									"// pm.sendRequest({\r",
+									"// url: 'http://localhost:8050/test/database',\r",
+									"// method: 'DELETE',\r",
+									"// });\r",
+									"\r",
+									"\r",
+									"// pm.sendRequest({\r",
+									"// url: 'http://localhost:8050/test/database',\r",
+									"// method: 'POST',\r",
+									"// });"
 								],
 								"type": "text/javascript"
 							}
@@ -254,14 +646,11 @@
 						"disableBodyPruning": true
 					},
 					"request": {
+						"auth": {
+							"type": "noauth"
+						},
 						"method": "GET",
-						"header": [
-							{
-								"key": "x-api-key",
-								"value": "513FC02E9D6A4E9BBB83A8EDFEC891652",
-								"type": "text"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": ""
@@ -297,6 +686,9 @@
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "noauth"
+						},
 						"method": "DELETE",
 						"header": [],
 						"url": {
