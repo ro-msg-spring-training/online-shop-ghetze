@@ -3,10 +3,7 @@ package ro.msg.learning.shop.configuration;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import ro.msg.learning.shop.strategy.LocationStrategy;
-import ro.msg.learning.shop.strategy.MostAbundantLocationImpl;
-import ro.msg.learning.shop.strategy.SingleLocationImp;
-import ro.msg.learning.shop.strategy.StrategyTypeEnum;
+import ro.msg.learning.shop.strategy.*;
 
 @Configuration
 public class LocationConfiguration {
@@ -18,6 +15,7 @@ public class LocationConfiguration {
 		return switch (strategy) {
 			case MOST_ABUNDANT -> new MostAbundantLocationImpl();
 			case SINGLE -> new SingleLocationImp();
+			case GREEDY -> new GreedyLocationImpl();
 			default -> throw new IllegalArgumentException("Invalid strategy: " + strategy);
 		};
 	}
