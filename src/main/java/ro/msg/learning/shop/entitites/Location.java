@@ -29,6 +29,11 @@ public class Location extends EntityWithID {
 		this.addressStreet = addressStreet;
 	}
 
+	public Location(UUID id)
+	{
+		super(id);
+	}
+
 	@Column(name = "address_country")
 	private String addressCountry;
 
